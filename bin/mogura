@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require 'mogura'
+require 'thor'
+module Mogura
+  module CLI
+    class Runner < Thor
+      desc 'version', 'Prints version'
+      def version
+        say "Mogura #{Mogura::VERSION}"
+      end
+
+      desc 'init', 'Initialize Digdag project'
+      def init
+        Mogura::Init.init
+      end
+
+      desc 'push', 'Push workflows'
+      method_option :endpoint, aliases: '-e', type: :string, desc: 'Endpoint of Digdag'
+      def push
+        Mogura::Push.push
+      end
+    end
+  end
+end
+
+Mogura::CLI::Runner.start

@@ -1,9 +1,21 @@
 RSpec.describe Mogura do
-  it "has a version number" do
-    expect(Mogura::VERSION).not_to be nil
+  it "defines Init" do
+    expect(defined?(Mogura::Init)).to be_truthy
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "defines Push" do
+    expect(defined?(Mogura::Push)).to be_truthy
+  end
+
+  it "defines VERSION" do
+    expect(defined?(Mogura::VERSION)).to be_truthy
+  end
+
+  it "defines Dag" do
+    expect(defined?(Mogura::Dag)).to be_truthy
+  end
+
+  it "has a version number" do
+    expect(Mogura::VERSION).not_to be nil
   end
 end
