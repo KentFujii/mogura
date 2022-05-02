@@ -1,12 +1,10 @@
 # Mogura
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mogura`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Digdag REST API and Ruby language API bridge for Rails.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Rails application's Gemfile:
 
 ```ruby
 gem 'mogura'
@@ -14,15 +12,21 @@ gem 'mogura'
 
 And then execute:
 
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install mogura
+```
+$ bundle install
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+$ bundle exec mogura help
+Commands:
+  mogura help [COMMAND]  # Describe available commands or one specific command
+  mogura init            # Initialize Digdag files
+  mogura push            # Push Digdag workflows
+  mogura version         # Prints version
+```
+
 
 ## Development
 

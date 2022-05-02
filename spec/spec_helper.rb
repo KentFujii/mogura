@@ -1,5 +1,7 @@
 require "bundler/setup"
-require "mogura"
+require 'pry'
+
+ENV['environment'] = 'test'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,3 +14,5 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+require "mogura"
