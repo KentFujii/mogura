@@ -16,7 +16,7 @@ RSpec.describe Mogura::Init do
     allow(Rails).to receive(:root).and_return(pathname)
     allow(Dir).to receive(:mkdir).with(pathname.join('app/dags').to_s)
     io = double('io')
-    allow(File).to receive(:new).with(pathname.join('app/dags/sample.rb').to_s, 'w').and_return(io)
+    allow(File).to receive(:new).with(pathname.join('app/dags/sample_dag.rb').to_s, 'w').and_return(io)
     expect(io).to receive(:puts).with(described_class.send(:dag_sample_content)).once
     expect(io).to receive(:close).once
 

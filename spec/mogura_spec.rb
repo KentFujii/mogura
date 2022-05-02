@@ -11,10 +11,6 @@ RSpec.describe Mogura do
     expect(defined?(Mogura::VERSION)).to be_truthy
   end
 
-  it "defines Dag" do
-    expect(defined?(Mogura::Dag)).to be_truthy
-  end
-
   it "has a version number" do
     expect(Mogura::VERSION).not_to be nil
   end
