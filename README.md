@@ -2,6 +2,10 @@
 
 Digdag REST API and Ruby language API bridge for Rails.
 
+## Project Focus
+
+https://dev.to/kentfujii/ive-created-a-tiny-library-connecting-rails-and-digdag-42d2
+
 ## Installation
 
 Add this line to your Rails application's Gemfile:
