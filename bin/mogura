@@ -11,12 +11,14 @@ module Mogura
         say "Mogura #{Mogura::VERSION}"
       end
 
-      desc 'init', 'Initialize Digdag files'
+      desc 'init', 'Initialize a Digdag project'
+      method_option :project, aliases: '-p', type: :string, desc: 'Project of Digdag'
       def init
-        Mogura::Init.init
+        opts = options.to_h.symbolize_keys
+        Mogura::Init.init(**opts.freeze)
       end
 
-      desc 'push', 'Push Digdag workflows'
+      desc 'push', 'Push a Digdag project'
       method_option :endpoint, aliases: '-e', type: :string, desc: 'Endpoint of Digdag'
       def push
         opts = options.to_h.symbolize_keys

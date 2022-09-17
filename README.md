@@ -18,6 +18,8 @@ $ bundle install
 
 ## Usage
 
+### CLI
+
 ```
 $ bundle exec mogura help
 Commands:
@@ -26,6 +28,27 @@ Commands:
   mogura push            # Push Digdag workflows
   mogura version         # Prints version
 ```
+
+### Rails
+
+```ruby
+# config/initializers/mogura.rb
+Mogura.configure do |config|
+  config.endpoint = 'http://digdag:65432'
+end
+```
+
+```ruby
+# lib/taksks/mogura.rake
+namespace :mogura do
+  desc "push"
+  task :push, [:project] => :environment do |_, args|
+    Mogura::Push.push(endpoint: args.project)
+  end
+end
+```
+
+
 
 
 ## Development

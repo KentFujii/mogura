@@ -5,6 +5,7 @@ require 'zlib'
 require 'fileutils'
 require 'net/http'
 require 'uri'
+require 'jbuilder'
 
 module Mogura
   class Push
@@ -32,13 +33,27 @@ module Mogura
             if File.directory?(file)
               tar.mkdir relative_file, mode
             else
+              require 'pry'; binding.pry
               tar.add_file relative_file, mode do |tf|
-                File.open(file, "rb") { |f| tf.write f.read }
+                File.open(file, "rb") do |f|
+                  # ここでjbuilderをymlに変換する
+                  tf.write f.read
+                end
               end
             end
           end
         end
         tarfile
+      end
+
+      def template
+        Jbuilder.encode do |json|
+          json.project do
+            json.name project
+            json.revision revision
+            json.session_time_zone 'Asia/Tokyo'
+          end
+        end
       end
 
       def gzip(tarfile)

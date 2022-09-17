@@ -27,4 +27,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails"
   spec.add_dependency 'thor'
+  spec.add_dependency 'jbuilder'
+  spec.add_dependency 'fileutils'
 end
