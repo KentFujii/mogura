@@ -1,0 +1,25 @@
+name: Apply
+on:
+  push:
+    branches:
+    - master
+env:
+  RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+jobs:
+  mogura:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: |
+        docker-compose build
+    - name: Test
+      run: |
+        docker-compose run mogura bundle exec rspec
+#    - name: Deploy
+#      run: |
+#        docker-compose run mogura bundle exec rspec
+

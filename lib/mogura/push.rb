@@ -33,10 +33,10 @@ module Mogura
             if File.directory?(file)
               tar.mkdir relative_file, mode
             else
-              require 'pry'; binding.pry
+              # TODO: convert jbuilder to yml
+              # require 'pry'; binding.pry
               tar.add_file relative_file, mode do |tf|
                 File.open(file, "rb") do |f|
-                  # ここでjbuilderをymlに変換する
                   tf.write f.read
                 end
               end
@@ -46,15 +46,15 @@ module Mogura
         tarfile
       end
 
-      def template
-        Jbuilder.encode do |json|
-          json.project do
-            json.name project
-            json.revision revision
-            json.session_time_zone 'Asia/Tokyo'
-          end
-        end
-      end
+      # def template
+      #   Jbuilder.encode do |json|
+      #     json.project do
+      #       json.name project
+      #       json.revision revision
+      #       json.session_time_zone 'Asia/Tokyo'
+      #     end
+      #   end
+      # end
 
       def gzip(tarfile)
         gz = StringIO.new("")
