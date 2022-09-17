@@ -4,6 +4,8 @@ on:
     branches:
     - master
 env:
+  GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+  GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
   RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 jobs:
   mogura:
@@ -13,13 +15,12 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0.3'
+    - name: Deploy
       run: |
-        docker-compose build
-    - name: Test
-      run: |
-        docker-compose run mogura bundle exec rspec
-#    - name: Deploy
-#      run: |
-#        docker-compose run mogura bundle exec rspec
-
+        git config --global user.name "$GIT_USER_NAME"
+        git config --global user.name "$GIT_USER_EMAIL"
+        bundle exec rake release

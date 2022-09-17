@@ -11,9 +11,13 @@ jobs:
         shell: bash
     steps:
     - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0.3'
     - name: Build
       run: |
-        docker-compose build
+        bundle install
     - name: Test
       run: |
-        docker-compose run mogura bundle exec rspec
+        bundle exec rspec
