@@ -2,16 +2,22 @@ module Mogura
   module Builder
     class Dag
       class << self
-        def build(name: '', content: {})
-          export ={
-            "_export": {
-              "rb": {
-                "require": Rails.root.join('config/environment').to_s
-              }
-            }
-          }.freeze
-          dag = Struct.new("Dag", :name, :content)
-          dag.new(name, export.merge(content))
+        def build(name: '', tasks: {})
+
+          dag = Struct.new("Dag", :name, :tasks) do
+            def content
+              export = {
+                "_export": {
+                  "rb": {
+                    "require": Rails.root.join('config/environment').to_s
+                  }
+                }
+              }.freeze
+              content
+              JSON.pretty_generate(export.merge(tasks))
+            end
+          end
+          dag.new(name, tasks)
         end
       end
     end
