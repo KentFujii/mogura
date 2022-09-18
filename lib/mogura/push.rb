@@ -33,7 +33,7 @@ module Mogura
         tarfile = StringIO.new("")
         Gem::Package::TarWriter.new(tarfile) do |tar|
           dags.each do |dag_name, dag_content|
-            tar.add_file "#{dag_name}#{DIG_EXT}" do |tf|
+            tar.add_file "#{dag_name}#{DIG_EXT}", 33188 do |tf|
               tf.write JSON.pretty_generate(export.merge(dag_content))
             end
           end
