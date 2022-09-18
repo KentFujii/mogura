@@ -1,0 +1,26 @@
+name: Apply
+on:
+  push:
+    branches:
+    - master
+env:
+  GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+  GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
+  RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+jobs:
+  mogura:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0.3'
+    - name: Deploy
+      run: |
+        git config --global user.name "$GIT_USER_NAME"
+        git config --global user.name "$GIT_USER_EMAIL"
+        bundle exec rake release

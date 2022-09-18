@@ -22,6 +22,8 @@ $ bundle install
 
 ## Usage
 
+### CLI
+
 ```
 $ bundle exec mogura help
 Commands:
@@ -29,6 +31,42 @@ Commands:
   mogura init            # Initialize Digdag files
   mogura push            # Push Digdag workflows
   mogura version         # Prints version
+```
+
+### Rails
+
+```ruby
+# config/initializers/mogura.rb
+Mogura.configure do |config|
+  config.endpoint = 'http://digdag:65432'
+end
+```
+
+```ruby
+# lib/taksks/mogura.rake
+namespace :mogura do
+  desc "create or update project"
+  task :push, [:project] => :environment do |_, args|
+    sample_dag = Mogura::Builder::Dag.build(
+      name: "sample_dag",
+      tasks: {
+        "timezone": "Asia/Tokyo",
+        "schedule": {
+          "minutes_interval>": "1"
+        },
+        "+say_hello": {
+          "echo>": "Hello world!!!!"
+        }
+      }
+    )
+    Mogura::Project::Put.project(project: args.project, dags: [sample_dag])
+  end
+
+  desc "delete project"
+  task :delete, [:project_id] => :environment do |_, args|
+    Mogura::Project::Delete.project(id: args.project_id)
+  end
+end
 ```
 
 

@@ -6,6 +6,6 @@ RSpec.describe Mogura::Push do
     http = double('http')
     allow(Net::HTTP).to receive(:start).and_yield(http)
     expect(http).to receive(:request).once
-    described_class.send(:push)
+    described_class.push
   end
 end
