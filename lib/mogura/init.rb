@@ -19,7 +19,7 @@ module Mogura
 
       def generate_dig_file
         FileUtils.mkdir_p(Rails.root.join("#{DIG_PATH}/#{@project.underscore}").to_s)
-        out_file = File.new(Rails.root.join("#{DIG_PATH}/#{@project.underscore}/sample.json.jbuilder").to_s, "w")
+        out_file = File.new(Rails.root.join("#{DIG_PATH}/#{@project.underscore}_dag/sample.json.jbuilder").to_s, "w")
         out_file.puts(dig_sample_content)
         out_file.close
       end
