@@ -12,8 +12,7 @@ module Mogura
     DIG_EXT = '.dig'.freeze
 
     class << self
-      def push(project: DEFAULT_PROJECT, dags: {})
-        require File.expand_path('config/environment') unless ENV['environment'] == 'test'
+      def push(project: Rails.application.class.module_parent_name, dags: {})
         upload(gzip(tar(dags)), Mogura.config.endpoint, project, revision)
       end
 
