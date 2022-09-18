@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module Mogura
   module Builder
     class Dag
@@ -12,10 +10,8 @@ module Mogura
               }
             }
           }.freeze
-          OpenStruct.new(
-            name: name,
-            content: export.merge(content)
-          )
+          dag = Struct.new("Dag", :name, :content)
+          dag.new(name, export.merge(content))
         end
       end
     end
