@@ -13,7 +13,6 @@ module Mogura
                   }
                 }
               }.freeze
-              content
               JSON.pretty_generate(export.merge(tasks))
             end
           end
