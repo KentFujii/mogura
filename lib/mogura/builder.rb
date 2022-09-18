@@ -12,7 +12,7 @@ module Mogura
               }
             }
           }.freeze
-          Openstruct.new(
+          OpenStruct.new(
             name: name,
             content: export.merge(content)
           )

@@ -5,7 +5,6 @@ require 'zlib'
 require 'fileutils'
 require 'net/http'
 require 'uri'
-require 'jbuilder'
 
 module Mogura
   class Push
