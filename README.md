@@ -24,17 +24,6 @@ $ bundle install
 
 ### CLI
 
-```
-$ bundle exec mogura help
-Commands:
-  mogura help [COMMAND]  # Describe available commands or one specific command
-  mogura init            # Initialize Digdag files
-  mogura push            # Push Digdag workflows
-  mogura version         # Prints version
-```
-
-### Rails
-
 ```ruby
 # config/initializers/mogura.rb
 Mogura.configure do |config|
@@ -68,7 +57,6 @@ namespace :mogura do
   end
 end
 ```
-
 
 ## Development
 
