@@ -41,9 +41,26 @@ end
 ```ruby
 # lib/taksks/mogura.rake
 namespace :mogura do
-  desc "push"
+  desc "create or update project"
   task :push, [:project] => :environment do |_, args|
-    Mogura::Push.push(endpoint: args.project)
+    sample_dag = Mogura::Builder::Dag.build(
+      name: "sample_dag",
+      tasks: {
+        "timezone": "Asia/Tokyo",
+        "schedule": {
+          "minutes_interval>": "1"
+        },
+        "+say_hello": {
+          "echo>": "Hello world!!!!"
+        }
+      }
+    )
+    Mogura::Project::Put.project(project: args.project, dags: [sample_dag])
+  end
+
+  desc "delete project"
+  task :delete, [:project_id] => :environment do |_, args|
+    Mogura::Project::Delete.project(id: args.project_id)
   end
 end
 ```
