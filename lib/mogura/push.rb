@@ -8,6 +8,7 @@ require 'uri'
 
 module Mogura
   class Push
+    FILE_MODE = 33188
     DIG_EXT = '.dig'.freeze
 
     class << self
@@ -21,7 +22,7 @@ module Mogura
         tarfile = StringIO.new("")
         Gem::Package::TarWriter.new(tarfile) do |tar|
           dags.each do |dag|
-            tar.add_file "#{dag.name}#{DIG_EXT}", 33188 do |tf|
+            tar.add_file "#{dag.name}#{DIG_EXT}", FILE_MODE do |tf|
               tf.write JSON.pretty_generate(dag.content)
             end
           end
