@@ -21,6 +21,7 @@ module Mogura
 
     class << self
       def push(project: DEFAULT_PROJECT, dags: {})
+        require File.expand_path('config/environment') unless ENV['environment'] == 'test'
         upload(gzip(tar(dags)), Mogura.config.endpoint, project, revision)
       end
 
