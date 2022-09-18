@@ -9,6 +9,17 @@ env:
   GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
 jobs:
   mogura:
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      issues: write
+      packages: write
+      pull-requests: write
+      repository-projects: write
+      security-events: write
+      statuses: write
     runs-on: ubuntu-latest
     defaults:
       run:
