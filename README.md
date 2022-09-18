@@ -22,8 +22,6 @@ $ bundle install
 
 ## Usage
 
-### CLI
-
 ```ruby
 # config/initializers/mogura.rb
 Mogura.configure do |config|
