@@ -8,6 +8,21 @@ require 'uri'
 
 module Mogura
   module Project
+    class Get
+      class << self
+        def projects
+          uri = URI.parse("#{Mogura.config.endpoint}/api/projects")
+          response = Net::HTTP.get_response(uri)
+          JSON.parse(response.body)
+        end
+
+        def project
+          # https://docs.digdag.io/api/
+          raise NotImplementedError, "You must implement #{self.name}##{__method__}"
+        end
+      end
+    end
+
     class Put
       class << self
         FILE_MODE = 33188
@@ -62,18 +77,19 @@ module Mogura
         end
       end
     end
-    
-    class Get
-      class << self
-        def projects
-          uri = URI.parse("#{Mogura.config.endpoint}/api/projects")
-          response = Net::HTTP.get_response(uri)
-          JSON.parse(response.body)
-        end
 
-        def project
-          # https://docs.digdag.io/api/
-          raise NotImplementedError, "You must implement #{self.name}##{__method__}"
+    class Delete
+      class << self
+        def project(id:)
+          uri = URI.parse("#{endpoint}/api/projects/#{id}")
+          request = Net::HTTP::Delete.new(uri)
+          req_options = {
+            use_ssl: uri.scheme == "https",
+          }
+          Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+            http.request(request)
+          end
+
         end
       end
     end
