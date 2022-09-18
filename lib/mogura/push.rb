@@ -9,52 +9,34 @@ require 'jbuilder'
 
 module Mogura
   class Push
-    DEFAULT_ENDPOINT = 'http://localhost:65432'.freeze
+    DEFAULT_PROJECT = Rails.application.class.module_parent_name.freeze
+    DIG_EXT = '.dig'.freeze
+    RESERVED_EXPORT = {
+      "_export": {
+        "rb": {
+          "require": Rails.root.join('config/environment').to_s
+        }
+      }
+    }.freeze
 
     class << self
-      def push(endpoint: DEFAULT_ENDPOINT)
-        require File.expand_path('config/environment') unless ENV['environment'] == 'test'
-        upload(gzip(tar(path)), endpoint, project, revision)
+      def push(project: DEFAULT_PROJECT, dags: {})
+        upload(gzip(tar(dags)), Mogura.config.endpoint, project, revision)
       end
 
       private
 
-      def path
-        Rails.root.join('config/digdag').to_s
-      end
-
-      def tar(path)
+      def tar(dags)
         tarfile = StringIO.new("")
         Gem::Package::TarWriter.new(tarfile) do |tar|
-          Dir[File.join(path, "**/*")].each do |file|
-            mode = File.stat(file).mode
-            relative_file = file.sub /^#{Regexp::escape path}\/?/, ''
-
-            if File.directory?(file)
-              tar.mkdir relative_file, mode
-            else
-              # TODO: convert jbuilder to yml
-              # require 'pry'; binding.pry
-              tar.add_file relative_file, mode do |tf|
-                File.open(file, "rb") do |f|
-                  tf.write f.read
-                end
-              end
+          dags.each do |dag_name, dag_content|
+            tar.add_file dag_name, mode do |tf|
+              tf.write JSON.pretty_generate(RESERVED_EXPORT.merge(dag_content))
             end
           end
         end
         tarfile
       end
-
-      # def template
-      #   Jbuilder.encode do |json|
-      #     json.project do
-      #       json.name project
-      #       json.revision revision
-      #       json.session_time_zone 'Asia/Tokyo'
-      #     end
-      #   end
-      # end
 
       def gzip(tarfile)
         gz = StringIO.new("")
@@ -62,10 +44,6 @@ module Mogura
         z.write tarfile.string
         z.close
         StringIO.new(gz.string, binmode: true)
-      end
-
-      def project
-        Rails.application.class.module_parent_name
       end
 
       def revision
