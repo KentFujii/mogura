@@ -44,7 +44,7 @@ module Mogura
           Gem::Package::TarWriter.new(tarfile) do |tar|
             dags.each do |dag|
               tar.add_file "#{dag.name}#{DIG_EXT}", FILE_MODE do |tf|
-                tf.write JSON.pretty_generate(dag.content)
+                tf.write dag.content
               end
             end
           end
