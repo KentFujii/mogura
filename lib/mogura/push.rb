@@ -13,7 +13,7 @@ module Mogura
 
     class << self
       def push(project: Rails.application.class.module_parent_name, dags: {})
-        upload(gzip(tar(export.merge(dags))), Mogura.config.endpoint, project, revision)
+        upload(gzip(tar(dags)), Mogura.config.endpoint, project, revision)
       end
 
       private
@@ -32,6 +32,8 @@ module Mogura
         tarfile = StringIO.new("")
         Gem::Package::TarWriter.new(tarfile) do |tar|
           dags.each do |dag_name, dag_content|
+            puts "dag_name: #{dag_name}"
+            puts "dag_content: #{dag_content}"
             tar.add_file "#{dag_name}#{DIG_EXT}", 33188 do |tf|
               tf.write JSON.pretty_generate(export.merge(dag_content))
             end
