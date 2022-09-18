@@ -4,7 +4,7 @@ module Mogura
   module Builder
     class Dag
       class << self
-        def build(name, content)
+        def build(name: '', content: {})
           export ={
             "_export": {
               "rb": {
