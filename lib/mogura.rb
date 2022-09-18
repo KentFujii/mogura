@@ -1,6 +1,5 @@
 require "mogura/version"
 require "mogura/configuration"
-require "mogura/init"
 require "mogura/push"
 require "mogura/project"
 
