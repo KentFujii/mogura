@@ -35,7 +35,7 @@ namespace :mogura do
   desc "create or update project"
   task :push, [:project] => :environment do |_, args|
     sample_dag = Mogura::Builder::Dag.build(
-      name: "sample_dag",
+      name: 'sample_dag',
       tasks: {
         "timezone": "Asia/Tokyo",
         "schedule": {
