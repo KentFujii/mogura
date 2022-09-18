@@ -1,7 +1,6 @@
 require "mogura/version"
 require "mogura/builder"
 require "mogura/configuration"
-require "mogura/push"
 require "mogura/project"
 
 module Mogura
