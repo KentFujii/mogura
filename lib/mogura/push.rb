@@ -13,7 +13,7 @@ module Mogura
 
     class << self
       def push(project: Rails.application.class.module_parent_name, dags: {})
-        upload(gzip(tar(dags)), Mogura.config.endpoint, project, revision)
+        upload(gzip(tar(export.merge(dags))), Mogura.config.endpoint, project, revision)
       end
 
       private
