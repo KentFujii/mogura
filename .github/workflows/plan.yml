@@ -2,7 +2,7 @@ name: Plan
 on:
   pull_request:
     branches:
-    - master
+    - main
 jobs:
   mogura:
     runs-on: ubuntu-latest
@@ -21,3 +21,4 @@ jobs:
     - name: Test
       run: |
         bundle exec rspec
+        bundle exec rubocop

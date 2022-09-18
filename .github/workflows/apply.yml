@@ -2,7 +2,7 @@ name: Apply
 on:
   push:
     branches:
-    - master
+    - main
 env:
   GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
   GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}

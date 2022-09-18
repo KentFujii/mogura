@@ -22,19 +22,6 @@ $ bundle install
 
 ## Usage
 
-### CLI
-
-```
-$ bundle exec mogura help
-Commands:
-  mogura help [COMMAND]  # Describe available commands or one specific command
-  mogura init            # Initialize Digdag files
-  mogura push            # Push Digdag workflows
-  mogura version         # Prints version
-```
-
-### Rails
-
 ```ruby
 # config/initializers/mogura.rb
 Mogura.configure do |config|
@@ -48,7 +35,7 @@ namespace :mogura do
   desc "create or update project"
   task :push, [:project] => :environment do |_, args|
     sample_dag = Mogura::Builder::Dag.build(
-      name: "sample_dag",
+      name: 'sample_dag',
       tasks: {
         "timezone": "Asia/Tokyo",
         "schedule": {
@@ -68,7 +55,6 @@ namespace :mogura do
   end
 end
 ```
-
 
 ## Development
 
