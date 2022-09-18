@@ -9,15 +9,7 @@ require 'jbuilder'
 
 module Mogura
   class Push
-    DEFAULT_PROJECT = Rails.application.class.module_parent_name.freeze
     DIG_EXT = '.dig'.freeze
-    RESERVED_EXPORT = {
-      "_export": {
-        "rb": {
-          "require": Rails.root.join('config/environment').to_s
-        }
-      }
-    }.freeze
 
     class << self
       def push(project: DEFAULT_PROJECT, dags: {})
@@ -27,12 +19,22 @@ module Mogura
 
       private
 
+      def export
+        {
+          "_export": {
+            "rb": {
+              "require": Rails.root.join('config/environment').to_s
+            }
+          }
+        }.freeze
+      end
+
       def tar(dags)
         tarfile = StringIO.new("")
         Gem::Package::TarWriter.new(tarfile) do |tar|
           dags.each do |dag_name, dag_content|
-            tar.add_file dag_name, mode do |tf|
-              tf.write JSON.pretty_generate(RESERVED_EXPORT.merge(dag_content))
+            tar.add_file "#{dag_name}#{DIG_EXT}", mode do |tf|
+              tf.write JSON.pretty_generate(export.merge(dag_content))
             end
           end
         end
