@@ -81,7 +81,7 @@ module Mogura
     class Delete
       class << self
         def project(id:)
-          uri = URI.parse("#{endpoint}/api/projects/#{id}")
+          uri = URI.parse("#{Mogura.config.endpoint}/api/projects/#{id}")
           request = Net::HTTP::Delete.new(uri)
           req_options = {
             use_ssl: uri.scheme == "https",
